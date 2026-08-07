@@ -1,115 +1,52 @@
-# Salifort Motors: Previsão de Rotatividade de Funcionários (Employee Turnover)
+# Salifort Motors — Previsão de Turnover de Funcionários
 
-> **Projeto desenvolvido como Capstone do Google Advanced Data Analytics Professional Certificate.**
+Modelo preditivo de rotatividade de colaboradores construído com Regressão Logística, Árvore de Decisão e Random Forest, desenvolvido como projeto final (Capstone) do **Google Advanced Data Analytics Professional Certificate**.
 
-## 📄 Documentação
-
-Além do notebook com toda a análise, este repositório também inclui dois documentos produzidos ao longo do projeto:
-
-- 📑 **[Documento PACE](reports/Salifort%20Motors%20Documento%20PACE.pdf)** — Documento que descreve o planejamento do projeto, os objetivos de negócio e a estratégia adotada seguindo o framework **PACE (Plan, Analyze, Construct, Execute)**.
-- 📊 **[Sumário Executivo](reports/Salifort%20Motors%20Sumário%20Executivo.pdf)** — Resumo executivo elaborado para stakeholders, apresentando os principais resultados, conclusões e recomendações de negócio em linguagem não técnica.
-
----
-
-## Visão Geral do Projeto
-
-Este repositório contém um projeto completo de análise de dados e machine learning focado em People Analytics. Ele foi desenvolvido como projeto final (Capstone) do certificado **Google Advanced Data Analytics**, simulando um caso real de negócio enfrentado por uma equipe de Ciência de Dados.
-
-O projeto analisa a **Salifort Motors**, uma fabricante fictícia de veículos de energia alternativa com sede na França. A empresa possui uma força de trabalho global de mais de 100.000 funcionários e enfrenta uma elevada taxa de rotatividade (turnover), tanto por desligamentos voluntários quanto involuntários.
-
-Como a empresa investe significativamente no recrutamento, treinamento e desenvolvimento de seus colaboradores, compreender os fatores associados ao turnover tornou-se uma necessidade estratégica.
-
-O objetivo deste projeto é analisar os dados históricos dos funcionários, identificar os fatores mais relevantes relacionados ao desligamento e desenvolver modelos de classificação capazes de prever quais colaboradores apresentam maior probabilidade de deixar a empresa. Além da construção dos modelos, a análise busca gerar insights que possam apoiar decisões voltadas à retenção de talentos.
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)
+![pandas](https://img.shields.io/badge/pandas-data%20wrangling-150458?logo=pandas&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-modeling-F7931E?logo=scikitlearn&logoColor=white)
+![XGBoost](https://img.shields.io/badge/XGBoost-benchmark-blue)
+![Jupyter](https://img.shields.io/badge/Jupyter-notebook-F37626?logo=jupyter&logoColor=white)
 
 ---
 
-## Dicionário de Dados
+## O problema de negócio
 
-A análise utiliza o conjunto de dados `HR_comma_sep.csv`.
+A **Salifort Motors**, fabricante fictícia de veículos de energia alternativa com mais de 100.000 funcionários, enfrenta uma taxa de rotatividade elevada, o que gera custos recorrentes de recrutamento e treinamento. O departamento de RH quer entender **por que os funcionários saem** e **antecipar quem está em risco de sair**, para agir antes do desligamento e não depois dele.
 
-- **14.999 registros**, onde cada linha representa um funcionário.
-- **10 variáveis** relacionadas ao perfil, desempenho e histórico dos colaboradores.
+Este projeto responde a essas duas perguntas construindo modelos de classificação sobre um histórico de **14.999 funcionários** e **10 variáveis** autorrelatadas (satisfação, avaliação de desempenho, carga de projetos, horas trabalhadas, tempo de casa, salário, entre outras).
 
-### Variáveis
+## Principais resultados
 
-- **`satisfaction_level`** **(float):** Nível de satisfação do funcionário, variando entre 0 e 1.
-- **`last_evaluation`** **(float):** Nota da última avaliação de desempenho, variando entre 0 e 1.
-- **`number_project`** **(int):** Número de projetos nos quais o funcionário atua.
-- **`average_monthly_hours`** **(int):** Média de horas trabalhadas por mês.
-- **`time_spend_company`** **(int):** Tempo de permanência do funcionário na empresa (anos).
-- **`work_accident`** **(int):** Indica se o funcionário sofreu acidente de trabalho (`0 = Não`, `1 = Sim`).
-- **`left`** **(int):** Variável alvo que indica se o funcionário deixou a empresa (`0 = Permaneceu`, `1 = Saiu da empresa`).
-- **`promotion_last_5years`** **(int):** Indica se o funcionário recebeu promoção nos últimos cinco anos.
-- **`department`** **(string):** Departamento onde o funcionário trabalha.
-- **`salary`** **(string):** Faixa salarial (`low`, `medium` ou `high`).
+| Modelo | AUC | Precisão | Recall | F1-score | Acurácia |
+|---|---|---|---|---|---|
+| Regressão Logística | — | 79% | 82% | 80% | 82% |
+| Árvore de Decisão | 95,6% | 83,1% | 90,3% | 86,5% | 95,3% |
+| **Random Forest** | **93,4%** | **91,3%** | **90,4%** | **88,5%** | **96,6%** |
 
----
+A Random Forest foi escolhida como modelo final por apresentar o equilíbrio mais consistente entre as métricas, mesmo com a Árvore de Decisão alcançando uma AUC ligeiramente superior.
 
-## Metodologia
+## O que os dados revelam
 
-Este projeto foi desenvolvido seguindo o framework **PACE (Plan, Analyze, Construct, Execute)**.
+- **Sobrecarga de trabalho é o principal preditor de saída.** Número de projetos simultâneos, horas mensais trabalhadas e tempo de casa concentram a maior importância nos dois modelos baseados em árvore.
+- **Existem dois perfis de saída bem distintos:** funcionários pouco satisfeitos com pouco tempo de casa, e funcionários com boas avaliações mas sobrecarregados, que saem apesar do bom desempenho.
+- **Quatro anos de empresa é um ponto crítico.** Colaboradores nessa faixa de tenure apresentam quedas acentuadas de satisfação, sugerindo um gargalo de progressão de carreira.
+- **Todos os funcionários com 7 projetos simultâneos deixaram a empresa** — um sinal de risco praticamente determinístico identificado na análise exploratória.
+- **Promoções são raras e pouco associadas à carga horária**, o que reforça a hipótese de que reconhecimento e crescimento não acompanham o esforço.
 
-As principais etapas foram:
+## Abordagem técnica
 
-1. **Análise Exploratória dos Dados (EDA)**
-   - Limpeza dos dados;
-   - Tratamento de inconsistências;
-   - Análise estatística;
-   - Visualizações para identificação de padrões.
+**Limpeza de dados:** identificação e remoção de 3.008 registros duplicados (~20% da base), tratamento de outliers em `tenure` via análise de quartis, padronização de nomes de colunas.
 
-2. **Engenharia de Atributos**
-   - Preparação dos dados para modelagem;
-   - Codificação das variáveis categóricas.
+**Prevenção de data leakage:** as primeiras versões dos modelos baseados em árvore atingiram métricas altas o suficiente para levantar suspeita de vazamento de dados. A variável `average_monthly_hours` foi substituída por uma feature derivada (`overworked`, funcionários acima de 175h/mês) e `satisfaction_level` foi removida do conjunto de treino nos modelos finais, tornando as previsões mais realistas para um cenário de produção.
 
-3. **Construção dos Modelos**
-   - Regressão Logística;
-   - Árvore de Decisão (Decision Tree);
-   - Random Forest.
+**Modelagem:** Regressão Logística como baseline interpretável; Árvore de Decisão e Random Forest com tuning de hiperparâmetros via `GridSearchCV` e validação cruzada. Como as classes são desbalanceadas (83% ficaram / 17% saíram), a avaliação priorizou Precision, Recall, F1-score e AUC-ROC em vez de acurácia isolada.
 
-4. **Otimização e Avaliação**
-   - Ajuste de hiperparâmetros utilizando **GridSearchCV**;
-   - Comparação dos modelos utilizando métricas de classificação.
+## Stack técnico
 
-## Resultados da Análise
+`Python` · `pandas` · `numpy` · `scikit-learn` · `XGBoost` · `matplotlib` · `seaborn` · `Jupyter Notebook`
 
-Após comparar diferentes algoritmos de classificação, verificou-se que os modelos baseados em árvores apresentaram desempenho significativamente superior ao modelo de Regressão Logística. A **Random Forest** obteve o melhor desempenho geral na tarefa de prever o turnover dos funcionários.
-
-### Desempenho dos Modelos
-
-**Regressão Logística**
-
-O modelo atingiu **precisão de 79%**, **recall de 82%**, **F1-score de 80%** e **acurácia de 82%** no conjunto de teste.
-
-**Modelos Baseados em Árvores**
-
-Após a etapa de engenharia de atributos (*feature engineering*), a **Random Forest** apresentou o melhor desempenho entre os modelos avaliados, alcançando **AUC de 93,4%**, **precisão de 91,3%**, **recall de 90,4%**, **F1-score de 88,5%** e **acurácia de 96,6%** no conjunto de teste.
-
-A **Árvore de Decisão** também apresentou excelente desempenho, obtendo **AUC de 95,6%**, **precisão de 83,1%**, **recall de 90,3%**, **F1-score de 86,5%** e **acurácia de 95,3%**. Embora tenha alcançado uma AUC ligeiramente superior, seu desempenho geral nas demais métricas foi inferior ao da Random Forest, tornando esta última o modelo mais equilibrado para a tarefa de previsão de rotatividade.
-
-### Principais Insights
-
-A análise exploratória e os modelos de Machine Learning indicaram que funcionários com **baixa satisfação**, **maior carga de trabalho**, **elevado número de projetos simultâneos** e **longas jornadas mensais** apresentam maior probabilidade de deixar a empresa.
-
-Outro padrão observado foi o aumento do risco de desligamento entre colaboradores com aproximadamente **quatro anos de empresa**, sugerindo um possível momento crítico relacionado ao desenvolvimento profissional ou à progressão de carreira.
-
-A análise de importância das variáveis mostrou que fatores relacionados à satisfação, desempenho e carga de trabalho possuem influência significativamente maior na previsão do turnover do que características demográficas ou organizacionais.
-
-## Recomendações
-
-Os resultados sugerem que a empresa pode reduzir sua taxa de rotatividade por meio de iniciativas voltadas ao equilíbrio da carga de trabalho e ao desenvolvimento profissional dos colaboradores. Limitar o número de projetos simultâneos, revisar políticas relacionadas às horas extras e tornar mais transparentes as expectativas sobre carga de trabalho podem contribuir para aumentar a satisfação dos funcionários.
-
-Além disso, recomenda-se acompanhar mais de perto colaboradores com aproximadamente quatro anos de empresa, oferecendo oportunidades de crescimento e reconhecimento profissional. Por fim, os critérios de avaliação de desempenho devem priorizar a qualidade das contribuições dos funcionários, evitando que avaliações elevadas estejam excessivamente associadas apenas a jornadas de trabalho muito extensas.
-
-## Próximos Passos
-
-Como continuidade deste projeto, algumas possibilidades incluem:
-
-- Avaliar o impacto da variável `last_evaluation` na ocorrência de possível **data leakage**;
-- Aplicar técnicas de interpretabilidade, como **SHAP**, para explicar individualmente as previsões dos modelos;
-- Explorar modelos de agrupamento (**K-Means**) para identificar perfis distintos de funcionários;
-- Comparar os resultados com outros algoritmos de classificação, como **XGBoost**.
-
-## Estrutura do Repositório
+## Estrutura do repositório
 
 ```text
 ├── data/
@@ -125,12 +62,27 @@ Como continuidade deste projeto, algumas possibilidades incluem:
 └── README.md
 ```
 
-### Descrição dos Arquivos
+## Documentação
 
-- **`data/`**: Contém o conjunto de dados utilizado na análise.
-- **`notebooks/`**: Notebook Jupyter com todo o pipeline de limpeza, análise exploratória, engenharia de atributos, modelagem e avaliação dos modelos.
-- **`reports/`**
-  - **`Salifort Motors Documento PACE.pdf`**: Documento que descreve o planejamento e a estratégia do projeto seguindo o framework PACE.
-  - **`Salifort Motors Sumário Executivo.pdf`**: Resumo executivo com os principais resultados, limitações e recomendações de negócio para stakeholders.
-- **`README.md`**: Documentação principal do projeto.
-````
+- 📑 [Documento PACE](reports/Salifort%20Motors%20Documento%20PACE.pdf) — planejamento do projeto, objetivos de negócio e estratégia, seguindo o framework **PACE (Plan, Analyze, Construct, Execute)**.
+- 📊 [Sumário Executivo](reports/Salifort%20Motors%20Sumário%20Executivo.pdf) — principais resultados e recomendações de negócio em linguagem não técnica, voltado a stakeholders.
+
+## Como reproduzir
+
+```bash
+git clone https://github.com/nogsposito/salifort-motors-retention-analysis/edit/main/README.md
+cd salifort-motors-turnover
+pip install pandas numpy scikit-learn xgboost matplotlib seaborn jupyter
+jupyter notebook notebooks/Salifort_Motors_Capstone.ipynb
+```
+
+## Próximos passos
+
+- Aplicar **SHAP** para interpretar previsões individuais do modelo.
+- Explorar **K-Means** para identificar perfis distintos de funcionários em risco.
+- Comparar o desempenho final com **XGBoost**.
+- Investigar novas variáveis: distância do deslocamento, formato de trabalho (remoto/presencial) e histórico de bônus.
+
+---
+
+Projeto desenvolvido como parte do **Google Advanced Data Analytics Professional Certificate**.
