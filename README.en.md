@@ -1,3 +1,5 @@
+[🇧🇷 Português](https://github.com/nogsposito/salifort-motors-retention-analysis/blob/main/README.md) | 🇺🇸 English
+
 # Salifort Motors — Employee Turnover Prediction
 
 A predictive employee turnover model built with Logistic Regression, Decision Tree, and Random Forest, developed as the final Capstone project for the **Google Advanced Data Analytics Professional Certificate**.
