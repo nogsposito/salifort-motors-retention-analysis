@@ -25,7 +25,7 @@ O objetivo deste projeto é analisar os dados históricos dos funcionários, ide
 
 ## Dicionário de Dados
 
-A análise utiliza o conjunto de dados `HR_capstone_dataset.csv`.
+A análise utiliza o conjunto de dados `HR_comma_sep.csv`.
 
 - **14.999 registros**, onde cada linha representa um funcionário.
 - **10 variáveis** relacionadas ao perfil, desempenho e histórico dos colaboradores.
@@ -109,7 +109,7 @@ Como continuidade deste projeto, algumas possibilidades incluem:
 
 ```text
 ├── data/
-│   └── HR_capstone_dataset.csv
+│   └── HR_comma_sep.csv
 │
 ├── notebooks/
 │   └── Salifort_Motors_Capstone.ipynb
