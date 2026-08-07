@@ -1,3 +1,5 @@
+🇧🇷 Português | [🇺🇸 English](https://github.com/nogsposito/salifort-motors-retention-analysis/blob/main/README.en.md)
+
 # Salifort Motors — Previsão de Turnover de Funcionários
 
 Modelo preditivo de rotatividade de colaboradores construído com Regressão Logística, Árvore de Decisão e Random Forest, desenvolvido como projeto final (Capstone) do **Google Advanced Data Analytics Professional Certificate**.
