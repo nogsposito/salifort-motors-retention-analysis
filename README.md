@@ -1,4 +1,3 @@
-````markdown
 # Salifort Motors: Previsão de Rotatividade de Funcionários (Employee Turnover)
 
 > **Projeto desenvolvido como Capstone do Google Advanced Data Analytics Professional Certificate.**
