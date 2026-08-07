@@ -76,11 +76,15 @@ Após comparar diferentes algoritmos de classificação, verificou-se que os mod
 
 ### Desempenho dos Modelos
 
-| Modelo | Accuracy | Precision | Recall | F1-Score |
-|---------|---------:|----------:|--------:|----------:|
-| Regressão Logística | 83% | 80% | 83% | 80% |
-| Árvore de Decisão | 96,2% | 87,0% | 90,4% | 88,7% |
-| **Random Forest** | **Melhor desempenho geral** | — | — | — |
+**Regressão Logística**
+
+O modelo atingiu **precisão de 79%**, **recall de 82%**, **F1-score de 80%** e **acurácia de 82%** no conjunto de teste.
+
+**Modelos Baseados em Árvores**
+
+Após a etapa de engenharia de atributos (*feature engineering*), a **Random Forest** apresentou o melhor desempenho entre os modelos avaliados, alcançando **AUC de 93,4%**, **precisão de 91,3%**, **recall de 90,4%**, **F1-score de 88,5%** e **acurácia de 96,6%** no conjunto de teste.
+
+A **Árvore de Decisão** também apresentou excelente desempenho, obtendo **AUC de 95,6%**, **precisão de 83,1%**, **recall de 90,3%**, **F1-score de 86,5%** e **acurácia de 95,3%**. Embora tenha alcançado uma AUC ligeiramente superior, seu desempenho geral nas demais métricas foi inferior ao da Random Forest, tornando esta última o modelo mais equilibrado para a tarefa de previsão de rotatividade.
 
 ### Principais Insights
 
